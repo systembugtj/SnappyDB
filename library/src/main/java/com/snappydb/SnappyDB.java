@@ -2,7 +2,6 @@ package com.snappydb;
 
 import android.content.Context;
 import android.text.TextUtils;
-
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
 
