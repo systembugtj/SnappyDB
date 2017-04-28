@@ -4,13 +4,30 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.3'
+        classpath 'com.android.tools.build:gradle:2.3.1'
+        classpath 'me.tatarka:gradle-retrolambda:3.2.4'
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.0.1"
     }
+}
+
+ext{
+    repoContextUrl = hasProperty('artifactory_context_url') ? artifactory_context_url : System.getenv('artifactory_context_url')
+    repoUsername = hasProperty('artifactory_username') ? artifactory_username : System.getenv('artifactory_username')
+    repoPassword = hasProperty('artifactory_password') ? artifactory_password : System.getenv('artifactory_password')
+    repoPath = hasProperty('artifactory_key') ? artifactory_key : System.getenv('artifactory_key')
 }
 
 allprojects {
     repositories {
+        maven {
+            url "http://maven.kandaping.com:8081/artifactory/libs-release-local"
+            credentials {
+                username = "${rootProject.ext.repoUsername}"
+                password = "${rootProject.ext.repoPassword}"
+            }
+        }
+        mavenCentral()
+        maven { url "http://repo1.maven.org/maven2/" }
         jcenter()
-        mavenLocal()
     }
 }

@@ -1,7 +1,9 @@
-
 apply plugin: 'com.android.library'
 apply plugin: 'maven'
 apply plugin: 'signing'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'maven-publish'
 
 group = 'com.snappydb'
 version = '0.5.2'
@@ -11,7 +13,7 @@ def sonatypeRepositoryUrl
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         minSdkVersion 9
@@ -21,8 +23,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     sourceSets.main {
@@ -31,15 +33,6 @@ android {
     }
 
     buildTypes.debug.jniDebuggable false
-
-    // call regular ndk-build script from app directory
-    task ndkBuild(type: Exec) {
-        commandLine "${getNdkPath()}/ndk-build", '-C', file('src/main/jni/').absolutePath
-    }
-
-    tasks.withType(JavaCompile) {
-        compileTask -> compileTask.dependsOn ndkBuild
-    }
 
     sourceSets {
         main {
@@ -51,17 +44,12 @@ android {
 }
 
 dependencies {
-    compile 'com.esotericsoftware.kryo:kryo:2.24.0'
-    androidTestCompile('de.javakaffee:kryo-serializers:0.26') {
+    compile 'com.esotericsoftware:kryo:4.0.0'
+    androidTestCompile('de.javakaffee:kryo-serializers:0.41') {
         transitive = false
         exclude group: 'com.esotericsoftware', module: 'kryo'
     }
 }
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.2'
-}
-
 
 if (isSnapshotBuild()) {
     sonatypeRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
@@ -101,58 +89,15 @@ artifacts {
 }
 
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            pom.artifactId = artifact_id
-
-            /*Uncomment to publish to Sonatype*/
-            repository(url: sonatypeRepositoryUrl) {
-                authentication(userName: sonatypeUsername, password: sonatypePassword)
-            }
-
-            /*Uncomment to publish to local maven*/
-            //repository(url: "file://${System.env.HOME}/.m2/repository/")
-
-            pom.project {
-                name 'SnappyDB'
-                description 'A fast and lightweight key/value database for Android'
-                url 'https://github.com/nhachicha/SnappyDB'
-                inceptionYear '2013'
-
-                scm {
-                    url 'https://github.com/nhachicha/SnappyDB'
-                    connection 'scm:git:https://github.com/nhachicha/SnappyDB.git'
-                    developerConnection 'scm:git:https://git@github.com/nhachicha/SnappyDB.git'
-                }
-
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                        distribution 'repo'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id 'nhachicha'
-                        name 'Nabil Hachicha'
-                        email 'nabil.hachicha@gmail.com'
-                    }
-                }
-            }
-        }
-    }
-}
-
-
 def isSnapshotBuild() {
     return version.contains("SNAPSHOT")
 }
 
 def getNdkPath () {
-    System.env.ANDROID_NDK_HOME?:"/Android/android-ndk-r10d"
+    System.env.ANDROID_NDK_HOME?:"/Android/sdk/ndk-bundle"
+}
+
+// call regular ndk-build script from app directory
+task buildLevelDB(type: Exec) {
+    commandLine "${getNdkPath()}/ndk-build", '-C', file('src/main/jni/').absolutePath
 }
