@@ -1,13 +1,13 @@
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.jfrog.artifactory'
-apply plugin: 'maven-publish'
+apply plugin: 'com.github.dcendents.android-maven'
 
-group = 'com.snappydb'
-version = '0.5.2'
+group='com.github.systembugtj'
+version="2.0.0"
+
 ext.packaging = 'aar'
+
 def artifact_id = 'snappydb-lib'
 def sonatypeRepositoryUrl
 
