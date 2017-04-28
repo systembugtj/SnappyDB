@@ -5,11 +5,6 @@ apply plugin: 'com.github.dcendents.android-maven'
 group='com.github.systembugtj'
 version="2.0.0"
 
-ext.packaging = 'aar'
-
-def artifact_id = 'snappydb-lib'
-def sonatypeRepositoryUrl
-
 android {
     compileSdkVersion 23
     buildToolsVersion '25.0.0'
