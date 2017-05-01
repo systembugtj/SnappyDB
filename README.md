@@ -1,6 +1,11 @@
 SnappyDB
 ========
 
+Repackage to upgrade to use kryo v4.
+
+
+## Introduction
+
 SnappyDB is a __key-value__ database for Android 
 it's an alternative for _SQLite_ if you want to use a __NoSQL__ approach.
 
@@ -18,7 +23,7 @@ Check out the Demo App [![PlayStore](http://snappydb.com/img/en_generic_rgb_wo_4
 Usage
 -----
 
- ```java
+```java
 try {
 	DB snappydb = DBFactory.open(context); //create or open an existing database using the default name
 	
@@ -34,9 +39,10 @@ try {
 		
 	snappydb.close();
 	
-	} catch (SnappydbException e) {
-	}
- ```
+} catch (SnappydbException e) {
+    //
+}
+```
 
 For more recipes please take a look at the [Cookbook](#cookbook).
 
@@ -48,10 +54,18 @@ Installation
 SnappyDB uses native code for performance, it's available as an [Android Library Project](http://tools.android.com/tech-docs/new-build-system/aar-format) `AAR`.
 
 ```groovy
-dependencies {
-    compile 'com.snappydb:snappydb-lib:0.5.2'
-    compile 'com.esotericsoftware.kryo:kryo:2.24.0'
+// project gradle
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
 }
+// app gradle
+dependencies {
+    compile 'com.github.systembugtj:snappydb:2.0.1'
+}
+
 ```
 
 or
