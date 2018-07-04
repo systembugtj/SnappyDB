@@ -20,7 +20,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,7 +37,7 @@ import com.snappydb.snippets.app.model.SnippetsFactory;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-public class MainActivity extends ActionBarActivity implements ExpandableListAdapter.OnSnippetClicked {
+public class MainActivity extends AppCompatActivity implements ExpandableListAdapter.OnSnippetClicked {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

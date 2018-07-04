@@ -19,3 +19,6 @@ local.properties
 .DS_Store
 .DS_Store?
 
+.project
+org.eclipse.buildship.core.prefs
+.classpath

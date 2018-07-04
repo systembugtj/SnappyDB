@@ -19,13 +19,13 @@ package com.snappydb.snippets.app.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import com.snappydb.snippets.app.R;
 import com.snappydb.snippets.app.fragment.SnippetWebViewFragment;
 import com.snappydb.snippets.app.model.Snippet;
 
-public abstract class AbsBaseSnippetActivity extends ActionBarActivity {
+public abstract class AbsBaseSnippetActivity extends AppCompatActivity {
     public final static String SNIPPET_ARG = "com.snappydb.snippets.app.activity.basic.OpenCloseSnippetActivity.SNIPPET_ARG";
 
     private Snippet mSnippet;

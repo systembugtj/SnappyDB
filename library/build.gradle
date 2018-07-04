@@ -1,17 +1,16 @@
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.github.dcendents.android-maven'
 
 group='com.github.systembugtj'
-version="2.0.0"
+version="2.0.2"
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 23
+        targetSdkVersion 27
         versionCode 5
         versionName version
     }
@@ -38,8 +37,8 @@ android {
 }
 
 dependencies {
-    compile 'com.esotericsoftware:kryo:4.0.0'
-    androidTestCompile('de.javakaffee:kryo-serializers:0.41') {
+    api 'com.esotericsoftware:kryo:4.0.2'
+    androidTestImplementation('de.javakaffee:kryo-serializers:0.41') {
         transitive = false
         exclude group: 'com.esotericsoftware', module: 'kryo'
     }
